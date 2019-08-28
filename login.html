@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link href="css/login.css" rel="stylesheet" />
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/tools.js"></script>
+    <script type="text/javascript">
+    $(function () {
+
+    });
+    </script>
+</head >
+    <body>
+        <div class="wrap">
+            <div class="logo">
+                <img src="img/LOGO.png" />
+            </div>
+            <div class="username">
+                <input type="text" id="username" value="" placeholder="请输入用户名" />
+            </div>
+            <div class="password">
+                <input type="password" id="password" name="" placeholder="请输入密码" />
+            </div>
+            <div class="btn">
+                <input type="submit" id="LoginBtn"  name="" value="点击登录" />
+            </div>
+            <div class="reg-page">
+                <a href="register.html">点击注册</a>
+            </div>
+        </div>
+    </body>
+</html >
+<script>
+    
+    $(function () {
+        $("#LoginBtn").click(function () {
+            $.ajax({
+                url: weburl + "api/Login",
+                method: "post",
+                data: {
+                    "username": $("#username").val(),
+                    "password": $("#password").val()
+
+                },
+                success: function (data) {
+                    
+                   
+                    alert("用户登陆成功");
+                    localStorage.setItem("token", data);
+                    var timeID = localStorage.getItem("timeID");
+                    if (timeID) {
+                        window.location.href = "seat.html?id=" + timeID;
+                    }
+                    else {
+                        window.location.href = "movie.html";
+
+                    }
+
+                    
+
+
+                },
+                error: function (msg) {
+                    alert("用户登陆失败，用户名或密码错误。"+msg.responseText)
+
+                }
+
+
+            })
+
+        })
+        
+    })
+</script>
